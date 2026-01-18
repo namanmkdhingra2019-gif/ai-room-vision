@@ -1,0 +1,4 @@
+project_id = "xcrhpajsvemphdlrdmce"
+
+[functions.view-in-room]
+verify_jwt = false
