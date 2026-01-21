@@ -3,10 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Brain, Eye, Sparkles, ArrowRight, Star, Shield, Truck } from 'lucide-react';
 import { sampleRugs } from '@/data/sampleRugs';
-
 export default function Index() {
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       {/* Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="container flex h-20 items-center justify-between">
@@ -21,10 +19,7 @@ export default function Index() {
             <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
               About
             </a>
-            <Link 
-              to="/view-in-room"
-              className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold/80 transition-colors"
-            >
+            <Link to="/view-in-room" className="inline-flex items-center gap-2 text-sm font-medium text-gold hover:text-gold/80 transition-colors">
               <Eye className="h-4 w-4" />
               View in Room
             </Link>
@@ -90,7 +85,8 @@ export default function Index() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold">AI Floor Detection</h3>
-                <p className="text-cream/70">Real neural network analysis, not just an overlay</p>
+                <p className="text-cream/70">
+              </p>
               </div>
             </div>
             
@@ -102,7 +98,8 @@ export default function Index() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold">Perspective Matching</h3>
-                <p className="text-cream/70">Rugs fit naturally with depth-aware scaling</p>
+                <p className="text-cream/70">
+              </p>
               </div>
             </div>
             
@@ -114,7 +111,8 @@ export default function Index() {
               </div>
               <div>
                 <h3 className="text-xl font-semibold">Realistic Shadows</h3>
-                <p className="text-cream/70">AI-generated contact shadows for realism</p>
+                <p className="text-cream/70">
+              </p>
               </div>
             </div>
           </div>
@@ -135,19 +133,10 @@ export default function Index() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sampleRugs.slice(0, 6).map((rug) => (
-              <Link 
-                key={rug.id} 
-                to="/view-in-room"
-                className="group luxury-card overflow-hidden"
-              >
+            {sampleRugs.slice(0, 6).map(rug => <Link key={rug.id} to="/view-in-room" className="group luxury-card overflow-hidden">
                 {/* Rug Preview */}
                 <div className="aspect-[4/3] relative overflow-hidden bg-muted">
-                  <img 
-                    src={rug.imageUrl} 
-                    alt={rug.name}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                  />
+                  <img src={rug.imageUrl} alt={rug.name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
                   
                   {/* Hover overlay */}
                   <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
@@ -158,11 +147,9 @@ export default function Index() {
                   </div>
 
                   {/* Sale badge */}
-                  {rug.originalPrice && (
-                    <Badge className="absolute top-3 left-3 bg-burgundy text-primary-foreground border-0">
+                  {rug.originalPrice && <Badge className="absolute top-3 left-3 bg-burgundy text-primary-foreground border-0">
                       Sale
-                    </Badge>
-                  )}
+                    </Badge>}
                 </div>
 
                 {/* Info */}
@@ -174,11 +161,9 @@ export default function Index() {
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-gold">${rug.price.toLocaleString()}</p>
-                      {rug.originalPrice && (
-                        <p className="text-sm text-muted-foreground line-through">
+                      {rug.originalPrice && <p className="text-sm text-muted-foreground line-through">
                           ${rug.originalPrice.toLocaleString()}
-                        </p>
-                      )}
+                        </p>}
                     </div>
                   </div>
                   
@@ -188,8 +173,7 @@ export default function Index() {
                     <span>{rug.material}</span>
                   </div>
                 </div>
-              </Link>
-            ))}
+              </Link>)}
           </div>
 
           <div className="mt-12 text-center">
@@ -205,12 +189,19 @@ export default function Index() {
       <section className="py-16 bg-muted/50">
         <div className="container">
           <div className="grid sm:grid-cols-3 gap-8">
-            {[
-              { icon: Star, title: '5-Star Reviews', description: 'Over 10,000 happy customers worldwide' },
-              { icon: Shield, title: 'Authenticity Guarantee', description: 'Every rug certified and verified' },
-              { icon: Truck, title: 'White Glove Delivery', description: 'Free shipping & professional installation' }
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-4">
+            {[{
+            icon: Star,
+            title: '5-Star Reviews',
+            description: 'Over 10,000 happy customers worldwide'
+          }, {
+            icon: Shield,
+            title: 'Authenticity Guarantee',
+            description: 'Every rug certified and verified'
+          }, {
+            icon: Truck,
+            title: 'White Glove Delivery',
+            description: 'Free shipping & professional installation'
+          }].map((item, index) => <div key={index} className="flex items-center gap-4">
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-background border border-border">
                   <item.icon className="h-6 w-6 text-gold" />
                 </div>
@@ -218,8 +209,7 @@ export default function Index() {
                   <h4 className="font-semibold text-foreground">{item.title}</h4>
                   <p className="text-sm text-muted-foreground">{item.description}</p>
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
       </section>
@@ -257,6 +247,5 @@ export default function Index() {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 }
