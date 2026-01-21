@@ -99,10 +99,11 @@ export default function ViewInRoom() {
         </div>
 
         {/* Result Display */}
-        {result?.success && result.compositeImageUrl && roomImage.preview && (
+        {result?.success && result.compositeImageUrl && roomImage.preview && selectedRug && (
           <ViewInRoomResultDisplay
             result={result}
             originalRoomImage={roomImage.preview}
+            selectedRug={selectedRug}
             onReset={handleReset}
             className="mb-12"
           />

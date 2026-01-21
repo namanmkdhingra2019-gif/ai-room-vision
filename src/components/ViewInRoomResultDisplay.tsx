@@ -1,12 +1,14 @@
-import { ViewInRoomResult } from '@/types/rug';
+import { ViewInRoomResult, Rug } from '@/types/rug';
 import { cn } from '@/lib/utils';
-import { Brain, CheckCircle, Download, RefreshCw, Share2 } from 'lucide-react';
+import { Brain, CheckCircle, RefreshCw, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { FabricCanvas } from '@/components/FabricCanvas';
 
 interface ViewInRoomResultDisplayProps {
   result: ViewInRoomResult;
   originalRoomImage: string;
+  selectedRug: Rug;
   onReset: () => void;
   className?: string;
 }
@@ -14,27 +16,18 @@ interface ViewInRoomResultDisplayProps {
 export function ViewInRoomResultDisplay({ 
   result, 
   originalRoomImage,
+  selectedRug,
   onReset,
   className 
 }: ViewInRoomResultDisplayProps) {
-  const handleDownload = () => {
-    if (!result.compositeImageUrl) return;
-    
-    const link = document.createElement('a');
-    link.href = result.compositeImageUrl;
-    link.download = 'view-in-room.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <div className={cn('space-y-6', className)}>
       {/* Result Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500/10">
-            <CheckCircle className="h-5 w-5 text-green-600" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/30">
+            <CheckCircle className="h-5 w-5 text-accent-foreground" />
           </div>
           <div>
             <h3 className="font-semibold text-foreground">AI-Generated Preview</h3>
@@ -50,7 +43,7 @@ export function ViewInRoomResultDisplay({
         </Badge>
       </div>
 
-      {/* Comparison View */}
+      {/* Interactive Canvas View */}
       <div className="grid md:grid-cols-2 gap-4">
         {/* Original Room */}
         <div className="space-y-2">
@@ -64,30 +57,20 @@ export function ViewInRoomResultDisplay({
           </div>
         </div>
 
-        {/* AI Result */}
+        {/* Interactive Fabric.js Canvas */}
         <div className="space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">With Rug (AI Generated)</p>
-          <div className="relative overflow-hidden rounded-xl border-2 border-gold/30 ring-4 ring-gold/10">
-            {result.compositeImageUrl ? (
-              <img 
-                src={result.compositeImageUrl} 
-                alt="AI generated room with rug" 
-                className="w-full h-auto"
-              />
-            ) : (
-              <div className="flex h-64 items-center justify-center bg-muted">
-                <p className="text-muted-foreground">Image not available</p>
-              </div>
-            )}
-            
-            {/* AI Badge overlay */}
-            <div className="absolute top-3 left-3">
-              <Badge className="bg-charcoal/80 text-cream border-0 backdrop-blur-sm">
-                <Brain className="h-3 w-3 mr-1" />
-                AI Floor Detection
-              </Badge>
+          <p className="text-sm font-medium text-muted-foreground">With Rug — Interactive Canvas</p>
+          {result.compositeImageUrl ? (
+            <FabricCanvas
+              backgroundImageUrl={originalRoomImage}
+              rugImageUrl={selectedRug.imageUrl}
+              initialPlacement={result.floorAnalysis?.recommendedRugPlacement}
+            />
+          ) : (
+            <div className="flex h-64 items-center justify-center bg-muted rounded-xl border border-border">
+              <p className="text-muted-foreground">Image not available</p>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -163,18 +146,10 @@ export function ViewInRoomResultDisplay({
           <RefreshCw className="h-4 w-4" />
           Try Another Room
         </Button>
-        {result.compositeImageUrl && (
-          <>
-            <Button onClick={handleDownload} variant="secondary" className="gap-2">
-              <Download className="h-4 w-4" />
-              Download Image
-            </Button>
-            <Button variant="secondary" className="gap-2">
-              <Share2 className="h-4 w-4" />
-              Share
-            </Button>
-          </>
-        )}
+        <Button variant="secondary" className="gap-2">
+          <Share2 className="h-4 w-4" />
+          Share
+        </Button>
       </div>
     </div>
   );
